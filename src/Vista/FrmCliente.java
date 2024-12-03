@@ -65,6 +65,12 @@ ClienteController controller;
 
         jLabel6.setText("Direccion");
 
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/stock_save.png"))); // NOI18N
@@ -280,6 +286,10 @@ ClienteController controller;
         showMessage("No se realizaron cambios");
     }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
 
     /**
      * @param args the command line arguments
