@@ -38,7 +38,7 @@ public class UsuarioController {
             return;
         }
         try {
-            if (!validatePK(usuario.getUsername())) {
+            if (!validatePK(usuario.getNombre())) {
                 view.showError("El nombre de usuario ya se encuentra registrado");
                 return;
             }
@@ -61,7 +61,7 @@ public class UsuarioController {
                 return;
             }
             Usuario usuario = mapper.toEnt(dto);
-            view.showMessage("Datos del usuario: " + usuario.getUsername());
+            view.showMessage("Datos del usuario: " + usuario.getNombre());
         } catch (SQLException ex) {
             view.showError("Ocurrió un error al buscar el usuario: " + ex.getMessage());
         }
@@ -73,7 +73,7 @@ public class UsuarioController {
             return;
         }
         try {
-            if (validatePK(usuario.getUsername())) {
+            if (validatePK(usuario.getNombre())) {
                 view.showError("El nombre de usuario no se encuentra registrado");
                 return;
             }
@@ -111,7 +111,7 @@ public class UsuarioController {
     }
 
     private boolean validateRequired(Usuario usuario) {
-        return usuario.getUsername() != null && !usuario.getUsername().trim().isEmpty()
+        return usuario.getNombre()!= null && !usuario.getNombre().trim().isEmpty()
                 && usuario.getPassword() != null && !usuario.getPassword().trim().isEmpty()
                 && usuario.getRol() != null && !usuario.getRol().trim().isEmpty();
     }
