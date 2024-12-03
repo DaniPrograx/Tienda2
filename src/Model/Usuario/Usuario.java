@@ -9,24 +9,42 @@ package Model.Usuario;
  * @author sibaj
  */
 public class Usuario {
-    private String username;
+    private int id;
+    private String nombre;
+    private String email;
     private String password;
     private String rol;
 
-    
-    public Usuario(String username, String password, String rol) {
-        this.username = username;
+    public Usuario(int id, String nombre, String email, String password, String rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
         this.password = password;
         this.rol = rol;
     }
 
-   
-    public String getUsername() {
-        return username;
+    public int getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -44,4 +62,8 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
+    public boolean validarCredenciales(String email, String contrasena) {
+        return this.email.equals(email) && this.password.equals(password);
+    }
+
 }

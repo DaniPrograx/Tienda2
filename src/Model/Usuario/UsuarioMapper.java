@@ -11,33 +11,37 @@ import java.sql.SQLException;
  *
  * @author Pablo
  */
-public class UsuarioMapper implements  Mapper<Usuario, UsuarioDTO> {
+public class UsuarioMapper implements Mapper<Usuario, UsuarioDTO> {
 
     @Override
     public UsuarioDTO toDTO(Usuario ent) {
-if (ent == null) {
+        if (ent == null) {
             return null;
         }
 
         return new UsuarioDTO(
-                ent.getUsername(),
+                ent.getId(),
+                ent.getNombre(),
+                ent.getEmail(),
                 ent.getPassword(),
                 ent.getRol()
-               );      }
+        );
+    }
 
     @Override
     public Usuario toEnt(UsuarioDTO dto) throws SQLException {
-if (dto==null ) return null;
-            
-       
+        if (dto == null) {
+            return null;
+        }
+
         return new Usuario(
-        dto.getUsername(),
-       dto .getPassword(),
-        dto.getRol()
-        
-       
+                dto.getId(),
+                dto.getNombre(),
+                dto.getEmail(),
+                dto.getPassword(),
+                dto.getRol()
         );
-                
-    }            
-    
+
+    }
+
 }
