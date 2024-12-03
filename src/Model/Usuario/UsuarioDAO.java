@@ -26,7 +26,9 @@ public class UsuarioDAO extends DAO<UsuarioDTO>{
     public boolean Agregar(UsuarioDTO dto) throws SQLException {
       String query = "Call UsuarioAgregar(?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, dto.getUsername());
+            stmt.setInt(1, dto.getId());
+             stmt.setString(1, dto.getNombre());
+              stmt.setString(1, dto.getEmail());
             stmt.setString(2, dto.getPassword());
             stmt.setString(3, dto.getRol());
             return stmt.executeUpdate() > 0;
@@ -41,7 +43,9 @@ public class UsuarioDAO extends DAO<UsuarioDTO>{
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return new UsuarioDTO(
-                            resultSet.getString("username"),
+                            resultSet.getInt("id"),
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
                             resultSet.getString("password"),
                             resultSet.getString("rol")
                             );
@@ -58,7 +62,7 @@ public class UsuarioDAO extends DAO<UsuarioDTO>{
         }
         String query = "Call usuarioUpdate(?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, dto.getUsername());
+            stmt.setString(1, dto.getNombre());
             stmt.setString(2, dto.getPassword());
             stmt.setString(3, dto.getRol());
             return stmt.executeUpdate() > 0;

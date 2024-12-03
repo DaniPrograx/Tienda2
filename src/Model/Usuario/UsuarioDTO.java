@@ -9,18 +9,30 @@ package Model.Usuario;
  * @author sibaj
  */
 public class UsuarioDTO {
-    private String username;
+    private int id;
+    private String nombre;
+    private String email;
     private String password;
     private String rol;
 
-    public UsuarioDTO(String username, String password, String rol) {
-        this.username = username;
+    public UsuarioDTO(int id, String nombre, String email, String password, String rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
         this.password = password;
         this.rol = rol;
     }
 
-    public String getUsername() {
-        return username;
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -30,5 +42,6 @@ public class UsuarioDTO {
     public String getRol() {
         return rol;
     }
+
 
 }
