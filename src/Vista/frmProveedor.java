@@ -4,17 +4,24 @@
  */
 package Vista;
 
+import Controller.ProveedorController;
+import Model.Proveedor.Proveedor;
+import Utils.utilsGui;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Pablo
  */
-public class frmProveedor extends javax.swing.JFrame {
-
+public class frmProveedor extends javax.swing.JFrame  implements View<Proveedor>{
+Proveedor proveedor;
+ProveedorController controller;
     /**
      * Creates new form frmProveedor
      */
     public frmProveedor() {
         initComponents();
+        controller= new ProveedorController(this);
     }
 
     /**
@@ -208,63 +215,76 @@ public class frmProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-//        if (!validateRequired()){
-//            showError("Faltan datos requeridos");
-//            return;
-//        }
-//        customer=new Customer(
-//            txtId.getText(),
-//            txtName.getText(),
-//            UtilDate.toLocalDate(txtDate.getText()),
-//            txtPhone.getText(),
-//            txtEmail.getText()
-//        );
-//        controller.create(customer);
-//        this.SetEditableStateTxts(false);
-//        changeStateBtns();
+        if (!validateRequired()){
+            showError("Faltan datos requeridos");
+            return;
+        }
+        proveedor=new Proveedor(
+            txtId.getText(),
+            txtNombre.getText(),
+            txtDireccion.getText(),
+            txtPrecio.getText()
+        );
+        controller.create(proveedor);
+        this.SetEditableStateTxts(false);
+        changeStateBtns();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-//        show(customer);
-//        this.SetEditableStateTxts(false);
-//        changeStateBtns();
+        show(proveedor);
+        this.SetEditableStateTxts(false);
+        changeStateBtns();
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-//        if (customer==null){
-//            showError("No hay ningun cliente cargado actualmente");
-//            return;
-//        }
-//        int option = JOptionPane.showConfirmDialog(
-//            this,
-//            "¿Está seguro que desea eliminar el cliente actual?",
-//            "Confirmar Eliminación",
-//            JOptionPane.YES_NO_OPTION
-//        );
-//        if(option==JOptionPane.NO_OPTION) return;
-//        controller.delete(customer);
-//        clear();
+        if (proveedor==null){
+            showError("No hay ningun cliente cargado actualmente");
+            return;
+        }
+        int option = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro que desea eliminar el cliente actual?",
+            "Confirmar Eliminación",
+            JOptionPane.YES_NO_OPTION
+        );
+        if(option==JOptionPane.NO_OPTION) return;
+        controller.delete(proveedor);
+        clear();
     }//GEN-LAST:event_btneliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//        if (customer==null){
-//            showError("No hay ningun cliente cargado actualmente");
-//            return;
-//        }
-//        if(!validateRequired()){
-//            showError("Faltan datos requeridos");
-//            return;
-//        }
-//        String newPhone = txtPhone.getText().trim();
-//        String newEmail = txtEmail.getText().trim();
-//        if (!newPhone.equals(customer.getPhone()) || !newEmail.equals(customer.getEmail())) {
-//            customer.setPhone(newPhone);
-//            customer.setEmail(newEmail);
-//            controller.update(customer);
-//            showMessage("Datos actualizados correctamente");
-//        }else{
-//            showMessage("No se realizaron cambios");
-//        }
+           if (proveedor == null) {
+        showError("No hay ningún proveedor cargado actualmente");
+        return;
+    }
+
+    if (!validateRequired()) {
+        showError("Faltan datos requeridos");
+        return;
+    }
+
+    // Obtención de los nuevos valores desde los campos de texto
+    String newNombre = txtNombre.getText().trim();
+    String newContacto = txtPrecio.getText().trim();
+    String newDireccion = txtDireccion.getText().trim();
+
+    // Verificación de cambios en los datos del proveedor
+    if (!newNombre.equals(proveedor.getNombre()) ||
+        !newContacto.equals(proveedor.getContacto()) ||
+        !newDireccion.equals(proveedor.getDireccion())) {
+
+        // Actualización de los valores del proveedor
+        proveedor.setNombre(newNombre);
+        proveedor.setContacto(newContacto);
+        proveedor.setDireccion(newDireccion);
+
+        // Llamada al controlador para actualizar
+        controller.update(proveedor);
+        showMessage("Datos actualizados correctamente");
+    } else {
+        showMessage("No se realizaron cambios");
+    }
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
@@ -323,4 +343,47 @@ public class frmProveedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void show(Proveedor ent) {
+ proveedor=ent;
+        if (ent==null) {
+            clear();
+            return;
+        }
+        txtId.setText(ent.getId());
+        txtNombre.setText(ent.getNombre());
+        txtDireccion.setText(ent.getDireccion());
+    }
+
+    @Override
+    public void showMessage(String msg) {
+  JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);    }
+    
+
+    @Override
+    public void showError(String err) {
+ JOptionPane.showMessageDialog(this, err, "Error", JOptionPane.ERROR_MESSAGE);    
+    }
+
+    @Override
+    public boolean validateRequired() {
+return utilsGui.validateFields(txtId,txtNombre,txtDireccion,txtPrecio);    }
+     public void changeStateBtns() {
+        utilsGui.changeStateButtons(btnGuardar,btnEditar,btnbuscar,btneliminar);
+    }
+    
+     private void clear(){
+        utilsGui.clearTxts(txtId,
+                txtNombre,
+                txtDireccion,
+                txtPrecio
+             
+        );
+    }
+      private void SetEditableStateTxts(boolean value){
+        txtId.setEditable(value);
+        txtNombre.setEditable(value);
+        txtDireccion.setEditable(value);
+    }
 }
